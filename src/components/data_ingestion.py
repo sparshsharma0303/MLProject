@@ -6,13 +6,15 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
+from src.components.data_transformation import DataTransformation
+
 
 @dataclass
 class DataIngestionConfig:
-    train_data_path : str = os.path.join('aritfacts','train.csv')
-    #Create a string variable named train_data_path that stores the file path to train.csv inside the aritfacts folder
-    test_data_path : str = os.path.join('aritfacts','test.csv')
-    raw_data_path : str = os.path.join('aritfacts','data.csv')
+    train_data_path : str = os.path.join('artifacts','train.csv')
+    #Create a string variable named train_data_path that stores the file path to train.csv inside the artifacts folder
+    test_data_path : str = os.path.join('artifacts','test.csv')
+    raw_data_path : str = os.path.join('artifacts','data.csv')
 
 class DataIngestion:
     def __init__(self):
@@ -45,4 +47,7 @@ class DataIngestion:
         
 if __name__ == "__main__":
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data, test_data = obj.initiate_data_ingestion()
+    data_transformation = DataTransformation()
+    data_transformation.intiate_data_transformation(train_data, test_data)
+
