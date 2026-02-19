@@ -7,14 +7,16 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainerConfig,ModelTrainer
+
 
 
 @dataclass
 class DataIngestionConfig:
     train_data_path : str = os.path.join('artifacts','train.csv')
-    #Create a string variable named train_data_path that stores the file path to train.csv inside the artifacts folder
     test_data_path : str = os.path.join('artifacts','test.csv')
     raw_data_path : str = os.path.join('artifacts','data.csv')
+    # Create a string variable named train_data_path that stores the file path to train.csv inside the artifacts folder instead we could have written simply by using \ or / but for windows and linux different are used which would have caused an error hence this becomes useful
 
 class DataIngestion:
     def __init__(self):
@@ -22,6 +24,8 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("entered the data ingestion method or component")
         try:
+            # data_location = os.path.join('notebook','data','study.csv')
+            # df = pd.read_csv(data_location)
             df = pd.read_csv('notebook\data\stud.csv')
             logging.info('read the dataset as dataframe')
 
@@ -44,6 +48,7 @@ class DataIngestion:
             )
         except Exception as e:
             raise CustomException(e,sys)
+
         
 if __name__ == "__main__":
     obj = DataIngestion()
@@ -51,3 +56,9 @@ if __name__ == "__main__":
     data_transformation = DataTransformation()
     data_transformation.intiate_data_transformation(train_data, test_data)
 
+    train_arr, test_arr,_ = data_transformation.intiate_data_transformation(train_data, test_data)
+
+    modeltrainer = ModelTrainer()
+    modeltrainer.intiate_model_trainer(train_arr,test_arr)
+
+    print(modeltrainer.intiate_model_trainer(train_arr,test_arr))
