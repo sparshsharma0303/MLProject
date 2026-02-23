@@ -37,3 +37,5 @@ setup(
     packages = find_packages(),## auto detects all the packages, looks for folder with __init__ file
     install_requires = get_requirements('requirements.txt') 
 )
+
+
